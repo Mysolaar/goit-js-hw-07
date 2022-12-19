@@ -4,16 +4,21 @@ import { galleryItems } from './gallery-items.js';
 console.log(galleryItems);
 
 
-//// =----------------
 const galleryImages = document.querySelector("div.gallery");
 
-const creategalleryImages = galleryItems
-  .map((galleryItem) => `<div class="gallery__image" data-source="${galleryItem.original}" alt="${galleryItem.description}"><img src="${galleryItem.preview}"></div>`)
-  .join("");
-
-galleryImages.insertAdjacentHTML("beforeend", creategalleryImages);
-
 const galleryElement = document.querySelector(".gallery");
+
+let html = "";
+galleryItems.forEach((item) => {
+  html += `
+    <div class="gallery__item">
+      <a class="gallery__item" href="${item.original}">
+        <img class="gallery__image" src="${item.preview}" alt="${item.description}" data-source="${item.original}">
+      </a>
+    </div>
+  `;
+});
+galleryElement.insertAdjacentHTML("beforeend", html);
 
 galleryElement.addEventListener("click", (event) => {
   if (event.target.classList.contains("gallery__image")) {
@@ -30,9 +35,7 @@ galleryElement.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
-   if (event.key === "Escape") {
-     modalInstance.close();
-   }
- });
-/// --------------
-
+  if (event.key === "Escape") {
+    modalInstance.close();
+  }
+});
